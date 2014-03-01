@@ -1,6 +1,16 @@
 var express = require('express'),
-    mongoose = require('mongoose'),
-    wods = require('./routes/wods');
+    path = require('path'),
+    fs = require('fs'),
+    mongoose = require('mongoose');
+
+
+// Bootstrap models
+var modelsPath = path.join(__dirname, 'models');
+fs.readdirSync(modelsPath).forEach(function (file) {
+  if (/(.*)\.(js$|coffee$)/.test(file)) {
+    require(modelsPath + '/' + file);
+  }
+});
 
 mongoose.connect('mongodb://localhost/dailywod');
 var db = mongoose.connection;
@@ -10,6 +20,7 @@ db.once('open', function callback () {
 
 var app = express();
 
+var wods = require('./routes/wods');
 app.get('/crossfitwicked/wods', wods.findAll);
 app.get('/crossfitwicked/wods/:id', wods.findById);
 
