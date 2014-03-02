@@ -1,7 +1,19 @@
 var FeedParser = require('feedparser'),
   request = require('request'),
+  mongoose = require('mongoose'),
+  path = require('path'),
+  fs = require('fs'),
   result = [];
 
+// Bootstrap models
+var modelsPath = path.join(__dirname, '../models');
+fs.readdirSync(modelsPath).forEach(function (file) {
+  if (/(.*)\.(js$|coffee$)/.test(file)) {
+    require(modelsPath + '/' + file);
+  }
+});
+
+var Wod = mongoose.model('Wod');
 var feed = 'http://www.crossfitwicked.com/feeds/rss_3.xml';
 
 var req = request(feed, {timeout: 10000, pool: false});
@@ -36,7 +48,13 @@ function done(err) {
     console.log(err, err.stack);
     return process.exit(1);
   }
+
   console.log(result);
+  save(result);
   return done(result);
   process.exit();
 }
+
+function save(result) {
+  new Wod({ description: result.wod });
+};
