@@ -1,60 +1,61 @@
-var FeedParser = require('feedparser'),
-  request = require('request'),
+var request = require('request'),
+  FeedParser = require('feedparser'),
   mongoose = require('mongoose'),
-  path = require('path'),
-  fs = require('fs'),
-  result = [];
+  db = mongoose.connect('mongodb://localhost/dailywod');
 
-// Bootstrap models
-var modelsPath = path.join(__dirname, '../models');
-fs.readdirSync(modelsPath).forEach(function (file) {
-  if (/(.*)\.(js$|coffee$)/.test(file)) {
-    require(modelsPath + '/' + file);
-  }
-});
+var WodSchema = new mongoose.Schema({
+    date: { type: Date, default: Date.now },
+    description: String
+  });
 
-var Wod = mongoose.model('Wod');
+var Wod = mongoose.model('Wod', WodSchema);
+
 var feed = 'http://www.crossfitwicked.com/feeds/rss_3.xml';
+fetch(feed);
 
-var req = request(feed, {timeout: 10000, pool: false});
-req.setMaxListeners(50);
+function fetch(feed) {
+  var req = request(feed, {timeout: 10000, pool: false});
+  req.setMaxListeners(50);
+  // Some feeds do not respond without user-agent and accept headers.
+  req.setHeader('user-agent', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/31.0.1650.63 Safari/537.36')
+     .setHeader('accept', 'text/html,application/xhtml+xml');
 
-// Some feeds do not respond without user-agent and accept headers.
-req.setHeader('user-agent', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/31.0.1650.63 Safari/537.36')
-   .setHeader('accept', 'text/html,application/xhtml+xml');
+  var feedparser = new FeedParser();
 
-var feedparser = new FeedParser();
+  req.on('error', done);
+  req.on('response', function(res) {
+    var stream = this;
 
-req.on('error', done);
-req.on('response', function (res) {
-  var stream = this;
+    if (res.statusCode != 200) return this.emit('error', new Error('Bad status code'));
 
-  if (res.statusCode != 200) return this.emit('error', new Error('Bad status code'));
+    stream.pipe(feedparser);
+  });
 
-  stream.pipe(feedparser);
-});
+  feedparser.on('error', done);
+  feedparser.on('end', done);
+  feedparser.on('readable', function() {
+    var post;
+    while (post = this.read()) {
+      saveContent(post);
+    }
+  });
+}
 
+function saveContent(content) {
+  var wod = new Wod({ title: new Date(), description: content.description });
+  console.log(content.title);
+  console.log(content.description);
 
-feedparser.on('error', done);
-feedparser.on('end', done);
-feedparser.on('readable', function() {
-  while (item = this.read()) {
-    result.push({title: item.title, wod: item.description});
-  }
-});
+  wod.save(function (err) {
+    if (err && err.errors && err.errors.guid && err.errors.guid.type==='unique') { console.log('>> article already saved'); return; }// ...
+    console.log('>> saved');
+  });
+}
 
 function done(err) {
   if (err) {
     console.log(err, err.stack);
     return process.exit(1);
   }
-
-  console.log(result);
-  save(result);
-  return done(result);
   process.exit();
 }
-
-function save(result) {
-  new Wod({ description: result.wod });
-};
