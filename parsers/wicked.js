@@ -1,11 +1,13 @@
 var request = require('request'),
   FeedParser = require('feedparser'),
+  moment = require('moment'),
   mongoose = require('mongoose'),
   db = mongoose.connect('mongodb://localhost/dailywod');
 
 var WodSchema = new mongoose.Schema({
     date: { type: Date, default: Date.now },
-    description: String
+    description: String,
+    guid: String
   });
 
 var Wod = mongoose.model('Wod', WodSchema);
@@ -42,14 +44,13 @@ function fetch(feed) {
 }
 
 function saveContent(content) {
-  var wod = new Wod({ date: content.title, description: content.description });
-  console.log(content.title);
-  console.log(content.description);
-
-  wod.save(function (err) {
-    if (err && err.errors && err.errors.guid && err.errors.guid.type==='unique') { console.log('>> article already saved'); return; }// ...
-    console.log('>> saved');
-  });
+  if (content.pubdate > moment) {
+    content = scrubContent(content)
+    var wod = new Wod({ date: content.title, description: content.description, guid: content.guid });
+    wod.save(function (err) {
+      if (err && err.errors && err.errors.guid && err.errors.guid.type==='unique') { console.log('>> article already saved'); return; }
+    });
+  }
 }
 
 function done(err) {
@@ -58,4 +59,21 @@ function done(err) {
     return process.exit(1);
   }
   process.exit();
+}
+
+function scrubContent(content) {
+  content.title = content.title.replace(/(<([^>]+)>)/ig,"");
+  content.description = content.description.replace( "/\n/g", " ");
+  content.description = content.description.replace( "&nbsp;", "");
+  content.description = content.description.replace(/(<([^>]+)>)/ig,"");
+  strings = content.description.split(["\n"]);
+  strings.every(nonDate);
+  content.description = strings.join(' ');
+  return content;
+}
+
+function nonDate(element, index, array) {
+  if(moment(element).isValid()) {
+    return array.splice(index, 1);
+  }
 }
