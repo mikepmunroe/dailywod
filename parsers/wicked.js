@@ -42,7 +42,7 @@ function fetch(feed) {
 }
 
 function saveContent(content) {
-  var wod = new Wod({ title: new Date(), description: content.description });
+  var wod = new Wod({ date: content.title, description: content.description });
   console.log(content.title);
   console.log(content.description);
 
