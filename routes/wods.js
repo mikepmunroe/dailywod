@@ -4,7 +4,7 @@ var mongoose = require('mongoose'),
     Wod = mongoose.model('Wod');
 
 exports.findAll = function(req, res) {
-  Wod.find().sort({ date: 'desc' }).exec(function(err, lifts) {
+  Wod.find().sort({ date: 'desc' }).select('date description').exec(function(err, lifts) {
     if (err) return res.json(500, err);
     res.json(lifts);
   });
