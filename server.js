@@ -27,5 +27,7 @@ var wods = require('./routes/wods');
 app.get('/crossfitwicked/wods', wods.findAll);
 app.get('/crossfitwicked/wods/:id', wods.findById);
 
-app.listen(3000);
-console.log('Listening on port 3000...');
+var port = Number(process.env.PORT || 3000);
+app.listen(port, function() {
+  console.log("Listening on " + port);
+});
