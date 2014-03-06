@@ -25,9 +25,7 @@
     </nav>
 
     <div class="intro-header">
-
         <div class="container">
-
             <div class="row">
                 <div class="col-lg-12">
                     <div class="intro-message">
@@ -36,35 +34,79 @@
                     </div>
                 </div>
             </div>
-
         </div>
-
     </div>
 
     <div class="content-section-a">
-
         <div class="container">
-
           <table class="table">
-      <thead>
-        <tr>
-          <th>Resource</th>
-          <th>Description</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><a href="/crossfitwicked/wods">GET crossfitwicked/wods</a></td>
-          <td>Returns data for all WODs. Each WOD returned will contain a date and description of the WOD for that day.</a></td>
-        </tr>
-      </tbody>
-    </table>
-    <h5 class="example">Example Requests</h5>
-    <hr />
-
+            <thead>
+              <tr>
+                <th>Resource</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><a href="/crossfitwicked/wods">GET crossfitwicked/wods</a></td>
+                <td>Returns data for all WODs. Each WOD returned will contain a date and description of the WOD for that day.</a></td>
+              </tr>
+            </tbody>
+          </table>
+          <pre>
+            [
+              {
+                description: "Tuesday, March 4, 2014 4 Rounds
+                 3 Minutes Work / 1 Minute Rest
+                 10 Burpee Boxjumps (24/20)
+                 10 Toes to Bar ",
+                _id: "53172da321fc70fb06000001",
+                date: "2014-03-04T05:00:00.000Z"
+              },
+              {
+                description: "Monday, March 3, 2014 Opens WOD 14.1
+                 10 Minute AMRAP
+                 30 Double unders
+                 15 Snatches (75/55) ",
+                _id: "53162206adaa1a0000000001",
+                date: "2014-03-03T05:00:00.000Z"
+              },
+              {
+                description: "Sunday, March 2, 2014 5 Rounds
+                 2 minutes on / 1 minute off
+                 15 Sit-ups
+                 10 Ring Rows
+                 5 Wall Ball (20/14) ",
+                _id: "53162206adaa1a0000000002",
+                date: "2014-03-02T05:00:00.000Z"
+              },
+              {
+                description: "Saturday, March 1, 2014 12 Minute AMRAP
+                 12 V-ups
+                 12 Box Jumps
+                 12 Push-ups
+                 alternate rounds with partner ",
+                _id: "53162206adaa1a0000000003",
+                date: "2014-03-01T05:00:00.000Z"
+              },
+              {
+                description: "Friday, February 28, 2013 5 Rounds
+                 15 Burpees
+                 15 Pull-ups ",
+                _id: "53162206adaa1a0000000004",
+                date: "2014-02-28T05:00:00.000Z"
+              },
+              {
+                description: "Thursday, February 27, 2014 15 Minute AMRAP
+                 250 Meter row
+                 Run 3 laps around gym
+                 10 Burpees ",
+                _id: "53162206adaa1a0000000005",
+                date: "2014-02-27T05:00:00.000Z"
+              }
+            ]
+          </pre>
         </div>
-        <!-- /.container -->
-
     </div>
 
     <div class="banner">
@@ -76,7 +118,8 @@
                 <div class="col-lg-12">
                     <ul class="list-inline">
                       <li class="footer-menu-divider"></li>
-                        <li>Built by <a href="http://munroegroupsolutions.com/">The Munroe Group</a>
+                        <li>Built by
+                          <a href="http://munroegroupsolutions.com/">The Munroe Group</a>
                         </li>
                     </ul>
                 </div>
@@ -89,5 +132,4 @@
     <script src="js/bootstrap.js"></script>
 
 </body>
-
 </html>
