@@ -1,39 +1,115 @@
-<!DOCTYPE HTML>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-  <script src="//cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.js">
-  </script>
-  <link type="text/css" rel="stylesheet" href="css/application.css">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- Bootstrap -->
-  <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
-  <title>Daily Wod</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Daily WOD</title>
+
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href='http://fonts.googleapis.com/css?family=Lato:100,300,400,700,900,100italic,300italic,400italic,700italic,900italic' rel='stylesheet' type='text/css'>
+    <link href="css/landing-page.css" rel="stylesheet">
+
 </head>
 
 <body>
-  <header>
-    <h1>Get Wods</h1>
-  </header>
 
-  <section>
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">Daily WOD</a>
+            </div>
 
-    <article>
-      <header>
-        <h4>Request URI</h4>
-        <pre>http://dailywods.io/crossfitwicked/wods</pre>
-      </header>
-    </article>
+            <div class="navbar-right">
+                <ul class="nav navbar-nav">
+                    <li><a href="#about">About</a>
+                    </li>
+                    <li><a href="#contact">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 
-  </section>
+    <div class="intro-header">
 
-  <aside>
-    <h4>About</h4>
-  </aside>
+        <div class="container">
 
-<script src="http://code.jquery.com/jquery.js"></script>
-<script src="js/bootstrap.min.js"></script>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="intro-message">
+                        <h1>Daily WOD</h1>
+                        <h3>The API to get your WOD data.</h3>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="content-section-a">
+
+        <div class="container">
+
+          <table class="table">
+      <thead>
+        <tr>
+          <th>Resource</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><a href="/crossfitwicked/wods">GET crossfitwicked/wods</a></td>
+          <td>Returns data for all WODs. Each WOD returned will contain a date and description of the WOD for that day.</a></td>
+        </tr>
+        <tr>
+          <td>GET crossfitwicked/wods/:id</td>
+          <td>Returns a single WOD for the id parameter specified. The WOD returned will contain a date and description of the WOD for that day.</td>
+        </tr>
+      </tbody>
+    </table>
+    <h5 class="example">Example Requests</h5>
+    <hr />
+
+        </div>
+        <!-- /.container -->
+
+    </div>
+
+    <div class="banner">
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <ul class="list-inline">
+                        <li><a href="#home">Home</a>
+                        </li>
+                        <li class="footer-menu-divider">&sdot;</li>
+                        <li><a href="#about">About</a>
+                        </li>
+                        <li class="footer-menu-divider">&sdot;</li>
+                        <li><a href="#services">Services</a>
+                        </li>
+                        <li class="footer-menu-divider">&sdot;</li>
+                        <li><a href="#contact">Contact</a>
+                        </li>
+                    </ul>
+                    <p class="copyright text-muted small">Copyright &copy; Your Company 2013. All Rights Reserved</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="js/jquery-1.10.2.js"></script>
+    <script src="js/bootstrap.js"></script>
+
 </body>
 
 </html>
