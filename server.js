@@ -27,7 +27,7 @@ app.configure(function(){
   app.use(express.static(__dirname));
 });
 
-var wods = require('./routes/wods');
+var wods = require(__dirname + '/routes/wods');
 app.get('/crossfitwicked/wods', wods.findAll);
 app.get('/crossfitwicked/wods/:id', wods.findById);
 
