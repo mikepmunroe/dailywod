@@ -19,6 +19,9 @@ db.once('open', function callback () {
 });
 
 var app = express();
+app.configure(function(){
+  app.use(express.static(__dirname));
+});
 
 var wods = require('./routes/wods');
 app.get('/crossfitwicked/wods', wods.findAll);
